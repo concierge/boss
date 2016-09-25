@@ -1,0 +1,7 @@
+{
+	"name": "boss",
+	"version": 1.0,
+	"startup": "boss.js",
+	"help": [],
+	"priority": "first"
+}

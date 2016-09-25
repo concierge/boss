@@ -1,0 +1,22 @@
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th style="text-align: center">Date</th>
+            <th style="text-align: center">Action</th>
+            <th style="text-align: center">User</th>
+            <th style="text-align: center">IP</th>
+            <th style="text-align: center">Agent</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center">
+        <tr ng-repeat="log in logs | orderBy:'-'">
+            <td><img ng-src="/img/{{determineType(log[1])}}.png" style="width:35px;height:35px" /></td>
+            <td style="vertical-align:middle">{{log[0]}}</td>
+            <td style="vertical-align:middle">{{log[1]}}</td>
+            <td style="vertical-align:middle">{{log[2]}}</td>
+            <td style="vertical-align:middle">{{log[3]}}</td>
+            <td style="vertical-align:middle">{{log[4]}}</td>
+        </tr>
+    </tbody>
+</table>

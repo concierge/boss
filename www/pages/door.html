@@ -1,0 +1,34 @@
+<div class="jumbotron jumbotron-fluid" style="padding-top:20px;padding-bottom:0">
+    <div class="container">
+        <img ng-src="{{webcamFeed}}" style="width: 100%">
+        <table class="table" style="margin:0">
+            <tr>
+                <td style="padding:0;vertical-align:middle"><p class="lead">{{'Door ' + state}}</p></td>
+                <td style="text-align:right;padding:0">
+                    <button type="button" class="btn btn-success" data-ng-show="check(1)" data-ng-click="closeDoor()">Close Door</button>
+                    <button type="button" class="btn btn-danger" data-ng-show="check(0)" data-ng-click="openDoor()">Open Door</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th style="text-align: center">Recording</th>
+            <th style="text-align: center">Date</th>
+            <th style="text-align: center">Actions</th>
+        </tr>
+    </thead>
+    <tbody style="text-align: center">
+        <tr ng-repeat="video in videos">
+            <td>{{video}}</td>
+            <td>{{toDateString(video)}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-ng-click="openVideo(video)">&nbsp;&nbsp;View&nbsp;&nbsp;</button>
+                <button type="button" class="btn btn-danger" data-ng-click="deleteVideo(video)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
