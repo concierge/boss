@@ -37,7 +37,7 @@ exports.load = () => {
 		let loaded = exports.platform.modulesLoader.getLoadedModules(),
 			modules = [];
 		for (let mod of loaded) {
-			modules.push(mod.name);
+			modules.push(mod.__descriptor);
 		}
 		res.send({
 			modules: modules,
