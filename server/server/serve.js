@@ -8,7 +8,7 @@ let express = require('express'),
 
 module.exports = class {
 
-    constructor (port, userManager, htmlRoot) {
+    constructor (port, userManager, htmlRoots) {
         this.serverPort = port;
         this.express = express();
         this.server = http.Server(this.express);
@@ -16,7 +16,7 @@ module.exports = class {
         let authMiddleware = auth.basicUsers(userManager);
         this.express.use(bodyParser.json());
         this.express.use(authMiddleware);
-        this.express.use(directory.dir(htmlRoot));
+        this.express.use(directory.dir(htmlRoots));
     }
 
     _handleApiCall (serverCall, api, func) {
@@ -37,6 +37,10 @@ module.exports = class {
                 });
             }
         });
+    }
+
+    use (middleware) {
+        this.express.use(middleware);
     }
 
     apiGet (api, func) {

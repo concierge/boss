@@ -1,29 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="bossApp">
+<html>
     <head>
-        <title>Boss</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-        <meta content="utf-8" http-equiv="encoding">
-        <link rel="shortcut icon" href="/favicon.ico" />
-
-        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        <script src="bower_components/socket.io-client/socket.io.js"></script>
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/angular-route/angular-route.min.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <script src="bower_components/angular-socket-io/socket.min.js"></script>
-
-        <script src="js/app.js"></script>
-        <script src="js/templateController.js"></script>
-        <script src="js/doorController.js"></script>
-        <script src="js/auditController.js"></script>
         <base href="/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css" integrity="sha256-c9OCpXgYepI8baar2x81YigAWryLIoQ2k0/7cCb1JAg=" crossorigin="anonymous" />
+
+        <!-- Polyfills -->
+        <script src="node_modules/core-js/client/shim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+        <script src="node_modules/zone.js/dist/zone.js"></script>
+        <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+        <script src="systemjs.config.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.umd.min.js" integrity="sha256-GYcdwXot2kSaBb8kr9o8zDKYBwQ1PCkugjcCYFQS+IA=" crossorigin="anonymous"></script>
+
+        <script>
+            System.import('main.js').catch(function(err){ console.error(err); });
+        </script>
     </head>
+
     <body>
-        <div data-ng-include data-src="'pages/template.html'"></div>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <boss-app>
+            <div style="left:0;top:0;width:100%;height:100%;position:absolute;">
+                <div style="text-align:center;display:block;left:50%;top:50%;position:absolute;">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                    Loading...
+                </div>
+            </div>
+        </boss-app>
     </body>
 </html>

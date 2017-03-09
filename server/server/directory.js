@@ -5,7 +5,7 @@
     mime = require('mime'),
 	url = require('url');
 
-exports.dir = (htmlRoot) => {
+exports.dir = htmlRoots => {
     return (req, res, next) => {
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
         res.header('Expires', '-1');
@@ -20,6 +20,21 @@ exports.dir = (htmlRoot) => {
                 p = "/index.html";
             }
 
+            let htmlRoot = null;
+            for (let key in htmlRoots) {
+                if (key === '_default_') {
+                    continue;
+                }
+                if (p.startsWith(key)) {
+                    htmlRoot = htmlRoots[key];
+                    p = p.substr(key.length);
+                    break;
+                }
+            }
+            if (htmlRoot === null) {
+                htmlRoot = htmlRoots['_default_'];
+            }
+
             let found = false,
                 file = path.resolve(path.join(htmlRoot, p));
 
@@ -28,7 +43,6 @@ exports.dir = (htmlRoot) => {
                 res.status(400).send('{"complete":false, "message":"bad request"}');
                 return;
             }
-
             let type = mime.lookup(file);
             fs.readFile(file, function(err, data) {
                 if (err) {

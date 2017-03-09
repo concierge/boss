@@ -2,7 +2,8 @@
 
 const Server = require('./server/server/serve.js'),
 	UserManager = require('./server/users/users.js'),
-	path = require('path');
+	path = require('path'),
+    fs = require('fs');
 let _serve = null;
 
 exports.load = () => {
@@ -14,9 +15,23 @@ exports.load = () => {
 			}
 		];
 
+    let npmPath;
+    try {
+        const p = path.join(exports.__descriptor.folderPath, 'node_modules');
+        if (!fs.statSync(p).isDirectory())
+            throw new Error();
+        npmPath = p;
+    }
+    catch(e) {
+        npmPath = global.rootPathJoin('node_modules');
+    }
+
 	let userManager = new UserManager(users);
-	_serve = new Server(port, userManager, path.join(exports.__folderPath, 'www'));
-	_serve.start();
+	_serve = new Server(port, userManager, {
+        '/node_modules/': npmPath,
+        '_default_': path.join(exports.__descriptor.folderPath, 'www')
+    });
+    _serve.start();
 
 	_serve.apiGet('modules', (req, res) => {
 		let loaded = exports.platform.modulesLoader.getLoadedModules(),
@@ -34,5 +49,3 @@ exports.load = () => {
 exports.unload = () => {
 	_serve.stop();
 };
-
-exports.match = () => false;

@@ -1,0 +1,87 @@
+<style>
+.table > tbody > tr > td {
+     vertical-align: middle;
+     text-align: center;
+}
+th {
+     vertical-align: middle;
+     text-align: center;
+}
+</style>
+
+<div class="row">
+    <div class="col" style="width:100%">
+        <table class="table table-condensed table-hover" style="cursor:default;user-select:none">
+            <thead class="thead-default">
+                <th>
+                    Name
+                </th>
+                <th>
+                    Version
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Loader
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let module of modules">
+                    <td>
+                        {{module.name}}
+                    </td>
+                    <td>
+                        {{module.version.toPrecision().indexOf('.') >= 0 ? module.version.toPrecision() : module.version.toPrecision() + '.0'}}
+                    </td>
+                    <td>
+                        <span class="label label-default">{{module.type}}</span>
+                    </td>
+                    <td>
+                        {{module.loader}}
+                    </td>
+                    <td>
+                        <div class="btn-group" style="margin:0">
+                            <button type="button" class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                Settings
+                            </button>
+                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                                <span class="sr-only">Other actions</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a>
+                                        <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+                                        Update
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                                        Reload
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a>
+                                        <span class="glyphicon glyphicon-eject" aria-hidden="true"></span>
+                                        Unload
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        Uninstall
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
