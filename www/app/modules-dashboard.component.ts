@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from './api.service'
 
 @Component({
     moduleId: module.id,
@@ -8,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class ModulesDashboardComponent implements OnInit {
     modules: Object[] = [];
 
-    constructor() { }
+    constructor(private apiService: ApiService) {
+        apiService.on('allModules', this.addAllModules.bind(this));
+        apiService.emit('allModules');
+    }
+
+    addAllModules(data: Object[]) : void {
+        console.log(data);
+        this.modules = data;
+    }
 
     ngOnInit(): void {}
 }

@@ -11,6 +11,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var app_routing_module_1 = require("./app-routing.module");
+var api_service_1 = require("./api.service");
 var app_component_1 = require("./app.component");
 var modules_dashboard_component_1 = require("./modules-dashboard.component");
 var AppModule = (function () {
@@ -30,7 +31,7 @@ AppModule = __decorate([
             app_component_1.AppComponent,
             modules_dashboard_component_1.ModulesDashboardComponent
         ],
-        providers: [],
+        providers: [api_service_1.ApiService],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);

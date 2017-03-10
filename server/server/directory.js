@@ -15,7 +15,7 @@ exports.dir = htmlRoots => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
 		let p = url.parse(req.url).path;
-        if (p.indexOf("/api") < 0) {
+        if (p.indexOf("/api") !== 0) {
             if (p === "/") {
                 p = "/index.html";
             }

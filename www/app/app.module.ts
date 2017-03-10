@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
-import { AppRoutingModule } from './app-routing.module';
-
-import { AppComponent }         from './app.component';
+import { AppRoutingModule }            from './app-routing.module';
+import { ApiService }                  from './api.service'
+import { AppComponent }                from './app.component';
 import { ModulesDashboardComponent }   from './modules-dashboard.component';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { ModulesDashboardComponent }   from './modules-dashboard.component';
         AppComponent,
         ModulesDashboardComponent
     ],
-    providers: [ ],
+    providers: [ ApiService ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }

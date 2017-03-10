@@ -30,20 +30,18 @@ exports.load = () => {
 	_serve = new Server(port, userManager, {
         '/node_modules/': npmPath,
         '_default_': path.join(exports.__descriptor.folderPath, 'www')
-    });
-    _serve.start();
+    }, '/bossEvents');
 
-	_serve.apiGet('modules', (req, res) => {
-		let loaded = exports.platform.modulesLoader.getLoadedModules(),
+    _serve.on('allModules', socket => {
+        const loaded = exports.platform.modulesLoader.getLoadedModules(),
 			modules = [];
 		for (let mod of loaded) {
 			modules.push(mod.__descriptor);
 		}
-		res.send({
-			modules: modules,
-			success: true
-		});
-	});
+        socket.emit('allModules', modules);
+    });
+
+    _serve.start();
 };
 
 exports.unload = () => {
