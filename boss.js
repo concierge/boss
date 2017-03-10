@@ -33,12 +33,22 @@ exports.load = () => {
     }, '/bossEvents');
 
     _serve.on('allModules', socket => {
-        const loaded = exports.platform.modulesLoader.getLoadedModules(),
-			modules = [];
-		for (let mod of loaded) {
+        const modules = [];
+		for (let mod of exports.platform.modulesLoader.getLoadedModules()) {
 			modules.push(mod.__descriptor);
 		}
         socket.emit('allModules', modules);
+    });
+
+    _serve.on('allLoaders', socket => {
+        const loaders = [];
+        for (let loader of exports.platform.modulesLoader._loaderPaths) {
+            const name = loader.split('/')[1];
+            loaders.push({
+                name: name
+            });
+        }
+        socket.emit('allLoaders', loaders);
     });
 
     _serve.start();

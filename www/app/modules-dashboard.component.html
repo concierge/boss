@@ -20,7 +20,7 @@ th {
                     Version
                 </th>
                 <th>
-                    Type
+                    Type(s)
                 </th>
                 <th>
                     Loader
@@ -36,10 +36,10 @@ th {
                         {{module.version.toPrecision().indexOf('.') >= 0 ? module.version.toPrecision() : module.version.toPrecision() + '.0'}}
                     </td>
                     <td>
-                        <span class="label label-default">{{module.type}}</span>
+                        <span *ngFor="let type of module.type" class="label" [ngClass]="colours[type] || colours['']">{{module.type}}</span>
                     </td>
                     <td>
-                        {{module.loader}}
+                        {{loaders[module.__loaderUID].name}}
                     </td>
                     <td>
                         <div class="btn-group" style="margin:0">
