@@ -2,6 +2,7 @@
 
 const Server = require('./server/server/serve.js'),
 	UserManager = require('./server/users/users.js'),
+    BossMockIntegration = require('./BossMockIntegration.js'),
 	path = require('path'),
     fs = require('fs');
 let _serve = null,
@@ -15,6 +16,10 @@ const onUnhandledError = (err, blame, api, event) => {
         event: event,
         datetime: (new Date()).toISOString()
     };
+    if (!errObj.event) {
+        errObj.event = shim.createEvent(-1, -1, '<unknown>', '<none>');
+        errObj.event.event_source = '<none>';
+    }
     unhandledErrors.push(errObj);
     _serve.emitToClient('unhandledError', errObj);
 };
@@ -44,6 +49,10 @@ exports.load = () => {
         '/node_modules/': npmPath,
         '_default_': path.join(exports.__descriptor.folderPath, 'www')
     }, '/bossEvents');
+
+    _serve.on('connection', socket => {
+        socket._integration = new BossMockIntegration(socket, exports.platform.onMessage.bind(exports.platform));
+    });
 
     _serve.on('allModules', socket => {
         const modules = [];

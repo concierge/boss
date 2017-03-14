@@ -23,4 +23,8 @@
      emit(event: string, ...data: any[]): void {
          this.socket.emit(event, data);
      }
+
+     removeListeners(event: string): void {
+         this.socket.removeAllListeners(event);
+     }
  }

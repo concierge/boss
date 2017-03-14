@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ApiService } from './api.service';
 import { Title } from '@angular/platform-browser';
 
@@ -7,7 +7,7 @@ import { Title } from '@angular/platform-browser';
     selector: 'error-dashboard',
     templateUrl: './error-dashboard.component.html'
 })
-export class ErrorDashboardComponent {
+export class ErrorDashboardComponent implements OnDestroy {
     private errors: Object[] = [];
 
     constructor(private apiService: ApiService, private titleService: Title) {
@@ -15,6 +15,7 @@ export class ErrorDashboardComponent {
         apiService.emit('allUnhandledErrors');
         titleService.setTitle('Errors');
         apiService.on('unhandledError', this.addNewError.bind(this));
+        this.apiService = apiService;
     }
 
     addAllErrors(data: Object[]): void {
@@ -27,5 +28,10 @@ export class ErrorDashboardComponent {
 
     toJSON(data: Object): string {
         return JSON.stringify(data, null, 4);
+    }
+
+    ngOnDestroy() {
+        this.apiService.removeListeners('allUnhandledErrors');
+        this.apiService.removeListeners('unhandledError');
     }
 }

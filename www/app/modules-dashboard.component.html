@@ -7,6 +7,10 @@ th {
      vertical-align: middle;
      text-align: center;
 }
+.modal .modal-body {
+    max-height: 420px;
+    overflow-y: auto;
+}
 </style>
 
 <div class="row">
@@ -53,26 +57,26 @@ th {
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a>
+                                    <a (click)="updateModule(module)" data-toggle="modal" data-target="#messageLog">
                                         <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
                                         Update
                                     </a>
                                 </li>
                                 <li>
-                                    <a>
+                                    <a (click)="reloadModule(module)" data-toggle="modal" data-target="#messageLog">
                                         <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
                                         Reload
                                     </a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a>
+                                    <a (click)="unloadModule(module)" data-toggle="modal" data-target="#messageLog">
                                         <span class="glyphicon glyphicon-eject" aria-hidden="true"></span>
                                         Unload
                                     </a>
                                 </li>
                                 <li>
-                                    <a>
+                                    <a (click)="uninstallModule(module)" data-toggle="modal" data-target="#messageLog">
                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         Uninstall
                                     </a>
@@ -83,5 +87,21 @@ th {
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div id="messageLog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Message Log</h4>
+            </div>
+            <div class="modal-body" style="text-align:left">
+                <pre>{{getMessageLog()}}</pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clearMessageLog()">Close and Clear</button>
+            </div>
+        </div>
     </div>
 </div>

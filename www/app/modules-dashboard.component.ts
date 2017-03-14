@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ApiService } from './api.service';
 import { Title } from '@angular/platform-browser';
 
@@ -17,8 +17,10 @@ export class ModulesDashboardComponent {
         'service': 'label-info',
         '': 'label-warning'
     };
+    private messageLog: string[] = [];
 
     constructor(private apiService: ApiService, private titleService: Title) {
+        this.apiService = apiService;
         apiService.on('allLoaders', this.resolveAllLoaders.bind(this));
         apiService.emit('allLoaders');
         apiService.on('allModules', this.addAllModules.bind(this));
@@ -47,6 +49,10 @@ export class ModulesDashboardComponent {
             const index = this.modules.findIndex(f => f.folderPath === data.folderPath);
             this.modules.splice(index, 1);
         });
+
+        apiService.on('directMessage', (data: string) => {
+            this.messageLog.push(data);
+        });
     }
 
     sortModules() : void {
@@ -66,5 +72,43 @@ export class ModulesDashboardComponent {
 
     resolveAllLoaders(data: Object[]) :void {
         this.loaders = data;
+    }
+
+    updateModule(module: Object) {
+        this.apiService.emit('directMessage', `/kpm update ${module.name}`);
+    }
+
+    unloadModule(module: Object) {
+        this.apiService.emit('directMessage', `/kpm unload ${module.name}`);
+    }
+
+    reloadModule(module: Object) {
+        this.apiService.emit('directMessage', `/kpm reload ${module.name}`);
+    }
+
+    uninstallModule(module: Object) {
+        this.apiService.emit('directMessage', `/kpm uninstall ${module.name}`);
+    }
+
+    getMessageLog(): string {
+        let str: string = '';
+        for (let message of this.messageLog) {
+            str += `${message.trim()}\n`;
+        }
+        return str;
+    }
+
+    clearMessageLog() {
+        this.messageLog = [];
+    }
+
+    ngOnDestroy() {
+        this.apiService.removeListeners('allLoaders');
+        this.apiService.removeListeners('allModules');
+        this.apiService.removeListeners('loader_preload');
+        this.apiService.removeListeners('loader_load');
+        this.apiService.removeListeners('loader_preunload');
+        this.apiService.removeListeners('loader_unload');
+        this.apiService.removeListeners('directMessage');
     }
 }
