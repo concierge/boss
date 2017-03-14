@@ -15,7 +15,9 @@
             '@angular/router/upgrade': 'npm:@angular/router/bundles/router-upgrade.umd.js',
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             'rxjs': 'npm:rxjs',
-            'socket.io-client': 'npm:socket.io-client/dist/socket.io.js'
+            'socket.io-client': 'npm:socket.io-client/dist/socket.io.js',
+            'boss/tab': 'boss/tab.js',
+            'boss/plugin': 'boss/plugin.js'
         },
         packages: {
             app: {

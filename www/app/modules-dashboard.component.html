@@ -28,7 +28,7 @@ th {
                 <th></th>
             </thead>
             <tbody>
-                <tr *ngFor="let module of modules">
+                <tr *ngFor="let module of modules" [ngClass]="{'warning':module.__bossDisable}">
                     <td>
                         {{module.name}}
                     </td>
@@ -43,11 +43,11 @@ th {
                     </td>
                     <td>
                         <div class="btn-group" style="margin:0">
-                            <button type="button" class="btn btn-info btn-sm">
+                            <button type="button" class="btn btn-info btn-sm" [disabled]="module.__bossDisable">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 Settings
                             </button>
-                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [disabled]="module.__bossDisable">
                                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
                                 <span class="sr-only">Other actions</span>
                             </button>

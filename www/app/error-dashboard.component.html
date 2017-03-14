@@ -1,0 +1,90 @@
+<style>
+.table > tbody > tr.summaryDetails > td {
+     vertical-align: middle;
+     text-align: center;
+}
+th {
+     vertical-align: middle;
+     text-align: center;
+}
+.ignoreHover:hover {
+      background-color: transparent;
+}
+.ignoreHover *:hover {
+      background-color: transparent;
+}
+</style>
+
+<div class="row">
+    <div class="col" style="width:100%">
+        <i>Please note that this list only contains unhandled errors. Errors that were handled are not recorded.</i>
+    </div>
+</div>
+<div class="row">
+    <div class="col" style="width:100%">
+        <table class="table table-condensed table-hover" style="cursor:default;user-select:none">
+            <thead class="thead-default">
+                <th>
+                    Date/Time
+                </th>
+                <th>
+                    Blame
+                </th>
+                <th>
+                    Integration
+                </th>
+                <th>
+                    Thread ID
+                </th>
+                <th>
+                    User
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let error of errors; let i = index">
+                    <tr class="summaryDetails">
+                        <td>{{error.datetime}}</td>
+                        <td>{{error.blame}}</td>
+                        <td>{{error.event.event_source}}</td>
+                        <td>{{error.event.thread_id}}</td>
+                        <td>{{error.event.sender_name}}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-toggle="collapse" [attr.data-target]="'#error-details-'+i">Details</button>
+                        </td>
+                    </tr>
+                    <tr class="collapse ignoreHover" [attr.id]="'error-details-'+i">
+                        <td colspan="6">
+                            <table class="table table-condensed" style="text-align:left; width:100%">
+                                <tr>
+                                    <th>Command</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <pre>{{error.event.body}}</pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Event</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <pre>{{toJSON(error.event, null, 4)}}</pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Stack Trace</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <pre>{{error.error}}</pre>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

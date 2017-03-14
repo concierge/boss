@@ -7,6 +7,7 @@ import { AppRoutingModule }            from './app-routing.module';
 import { ApiService }                  from './api.service'
 import { AppComponent }                from './app.component';
 import { ModulesDashboardComponent }   from './modules-dashboard.component';
+import { ErrorDashboardComponent }     from './error-dashboard.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import { ModulesDashboardComponent }   from './modules-dashboard.component';
     ],
     declarations: [
         AppComponent,
-        ModulesDashboardComponent
+        ModulesDashboardComponent,
+        ErrorDashboardComponent
     ],
     providers: [ ApiService ],
     bootstrap: [ AppComponent ]

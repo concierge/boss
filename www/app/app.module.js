@@ -14,6 +14,7 @@ var app_routing_module_1 = require("./app-routing.module");
 var api_service_1 = require("./api.service");
 var app_component_1 = require("./app.component");
 var modules_dashboard_component_1 = require("./modules-dashboard.component");
+var error_dashboard_component_1 = require("./error-dashboard.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -29,7 +30,8 @@ AppModule = __decorate([
         ],
         declarations: [
             app_component_1.AppComponent,
-            modules_dashboard_component_1.ModulesDashboardComponent
+            modules_dashboard_component_1.ModulesDashboardComponent,
+            error_dashboard_component_1.ErrorDashboardComponent
         ],
         providers: [api_service_1.ApiService],
         bootstrap: [app_component_1.AppComponent]

@@ -4,7 +4,20 @@ const Server = require('./server/server/serve.js'),
 	UserManager = require('./server/users/users.js'),
 	path = require('path'),
     fs = require('fs');
-let _serve = null;
+let _serve = null,
+    loaderEvents = {},
+    unhandledErrors = [];
+
+const onUnhandledError = (err, blame, api, event) => {
+    const errObj = {
+        error: err.stack || err,
+        blame: blame,
+        event: event,
+        datetime: (new Date()).toISOString()
+    };
+    unhandledErrors.push(errObj);
+    _serve.emitToClient('unhandledError', errObj);
+};
 
 exports.load = () => {
 	let port = exports.config.port || 8080,
@@ -51,9 +64,45 @@ exports.load = () => {
         socket.emit('allLoaders', loaders);
     });
 
+    const loaderEvents = ['load', 'unload', 'start', 'stop'];
+    const em = (name, data) => {
+        try {
+            let desc = data.__descriptor;
+            if (data.module) {
+                if (data.module.__descriptor)
+                    desc = data.module.__descriptor;
+                else
+                    desc = data.module;
+            }
+            else if (!desc)
+                desc = data;
+            _serve.emitToClient(`loader_${name}`, desc);
+        }
+        catch (e) {}
+    }
+    for (let ev of loaderEvents) {
+        const before = em.bind(this, ev);
+        const after = em.bind(this, `pre${ev}`);
+        exports.platform.modulesLoader.on(ev, before);
+        exports.platform.modulesLoader.on(`pre${ev}`, after);
+        loaderEvents[ev] = before;
+        loaderEvents[`pre${ev}`] = after;
+    }
+
+    exports.platform.on('uncaughtError', onUnhandledError);
+    _serve.on('allUnhandledErrors', socket => {
+        socket.emit('allUnhandledErrors', unhandledErrors);
+    });
+
     _serve.start();
 };
 
 exports.unload = () => {
+    exports.platform.removeListener('uncaughtError', onUnhandledError);
+    unhandledErrors = [];
+    for (let ev in loaderEvents) {
+        exports.platform.modulesLoader.removeListener(ev, loaderEvents[ev]);
+        delete loaderEvents[ev];
+    }
 	_serve.stop();
 };
