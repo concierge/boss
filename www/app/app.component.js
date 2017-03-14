@@ -5,12 +5,31 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var api_service_1 = require("./api.service");
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(apiService) {
+        var _this = this;
+        this.apiService = apiService;
         this.title = 'Boss';
+        this.isConnected = true;
+        apiService.on('connect', function () {
+            _this.isConnected = true;
+        });
+        apiService.on('disconnect', function () {
+            _this.isConnected = false;
+        });
     }
+    AppComponent.prototype.shutdown = function () {
+        this.apiService.emit('directMessage', '/shutdown');
+    };
+    AppComponent.prototype.restart = function () {
+        this.apiService.emit('directMessage', '/restart');
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -18,7 +37,8 @@ AppComponent = __decorate([
         moduleId: module.id,
         selector: 'boss-app',
         templateUrl: './app.component.html'
-    })
+    }),
+    __metadata("design:paramtypes", [api_service_1.ApiService])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

@@ -15,6 +15,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <a data-toggle="modal" data-target="#powerDialog">
+                        <span class="glyphicon glyphicon-off"></span>
+                    </a>
+                </li>
+                <li>
                     <a href="https://github.com/concierge/boss/issues">
                         <span class="glyphicon glyphicon-wrench"></span>
                     </a>
@@ -30,4 +35,71 @@
 </nav>
 <div class="container">
     <router-outlet></router-outlet>
+</div>
+
+<style>
+#offlineDialog {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background-color: #666666;
+}
+.hideOfflineDialog {
+    display: none;
+}
+.powerButton {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+}
+.powerButtonIcon {
+    font-size: 80px;
+}
+</style>
+
+<div id="offlineDialog" [ngClass]="{'hideOfflineDialog':isConnected}">
+    <div class="modal show" style="z-index:1000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Offline</h4>
+                </div>
+                <div class="modal-body">
+                    <p>You appear to have gone offline.<br/>Did you unload boss or shutdown Concierge?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="powerDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Shutdown</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <button type="button" class="btn btn-danger powerButton" data-dismiss="modal" (click)="shutdown()">
+                    <span class="glyphicon glyphicon-off powerButtonIcon"></span>
+                    <br />
+                    <span>Shutdown</span>
+                </button>
+
+                <button type="button" class="btn btn-primary powerButton" data-dismiss="modal" (click)="restart()">
+                    <span class="glyphicon glyphicon-repeat powerButtonIcon"></span>
+                    <br />
+                    <span>Restart</span>
+                </button>
+
+                <button type="button" class="btn btn-default powerButton" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-circle-arrow-right powerButtonIcon"></span>
+                    <br />
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
