@@ -45,22 +45,26 @@ export class ModuleConfigComponent extends ApiServiceUser {
 
     save(): void {
         const data = this.editor.get();
-        this.emit('module_newconfig', this.module.name, data);
+        this.emit('module_newconfig', this.selectedModule.name, data);
     }
 
     update(): void {
-        this.emit('directMessage', `/kpm update ${module.name}`);
+        $('#messageLog').modal('show');
+        this.emit('directMessage', `/kpm update ${this.selectedModule.name}`);
     }
 
     reload(): void {
-        this.emit('directMessage', `/kpm reload ${module.name}`);
+        $('#messageLog').modal('show');
+        this.emit('directMessage', `/kpm reload ${this.selectedModule.name}`);
     }
 
     unload(): void {
-        this.emit('directMessage', `/kpm unload ${module.name}`);
+        $('#messageLog').modal('show');
+        this.emit('directMessage', `/kpm unload ${this.selectedModule.name}`);
     }
 
     uninstall(): void {
-        this.emit('directMessage', `/kpm uninstall ${module.name}`);
+        $('#messageLog').modal('show');
+        this.emit('directMessage', `/kpm uninstall ${this.selectedModule.name}`);
     }
 }

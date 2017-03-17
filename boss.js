@@ -3,6 +3,7 @@
 const Server = require('./server/server/serve.js'),
 	UserManager = require('./server/users/users.js'),
     BossMockIntegration = require('./BossMockIntegration.js'),
+    files = require('concierge/files'),
 	path = require('path'),
     fs = require('fs');
 let _serve = null,
@@ -136,14 +137,15 @@ exports.load = () => {
         if (typeof(inputData) !== 'object' || Array.isArray(inputData)) {
             return;
         }
-        for (let key in queryResult.parent[queryResult.property]) {
-            if (queryResult.parent[queryResult.property].hasOwnProperty(key)) {
-                delete queryResult.parent[queryResult.property][key];
+
+        for (let key in cfg) {
+            if (!inputData.hasOwnProperty(key)) {
+                delete cfg[key];
             }
         }
         for (let key in inputData) {
             if (inputData.hasOwnProperty(key)) {
-                queryResult.parent[queryResult.property][key] = inputData[key];
+                cfg[key] = inputData[key];
             }
         }
 
@@ -152,6 +154,18 @@ exports.load = () => {
                 process.env[key.substr(4)] = cfg[key];
             }
         }
+    });
+
+    _serve.on('unloaded_modules', socket => {
+        const folders = exports.platform.modulesLoader.getLoadedModules()
+            .map(m => path.basename(m.__descriptor.folderPath));
+        const data = files.filesInDirectory(global.__modulesPath);
+        const unloadedModules = [];
+        for (let folder of data) {
+            if (!folders.includes(folder))
+                unloadedModules.push(folder);
+        }
+        socket.emit('unloaded_modules', unloadedModules);
     });
 
     _serve.start();

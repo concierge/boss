@@ -1,6 +1,4 @@
 config.json
 node_modules
 *.js.map
-www/*.js
-www/**/*.js
 !www/systemjs.config.js

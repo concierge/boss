@@ -7,7 +7,10 @@ unauthorised = (res) => {
         res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
     }
     catch (e) {}
-    return res.sendStatus(401);
+    try {
+        return res.sendStatus(401);
+    }
+    catch (e) {} // if we got in here..... :(
 };
 
 exports.basicUsers = (userManager, ignoredAuthConfig) => {

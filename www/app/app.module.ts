@@ -11,6 +11,7 @@ import { ModulesDashboardComponent }   from './modules-dashboard.component.js';
 import { ErrorDashboardComponent }     from './error-dashboard.component.js';
 import { ModuleConfigComponent }       from './module-config.component.js';
 import { UserConfigComponent }         from './user.component.js';
+import { ModuleLoadComponent }         from './module-load.component.js';
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import { UserConfigComponent }         from './user.component.js';
         ModulesDashboardComponent,
         ErrorDashboardComponent,
         ModuleConfigComponent,
-        UserConfigComponent
+        UserConfigComponent,
+        ModuleLoadComponent
     ],
     providers: [ ApiService ],
     bootstrap: [ AppComponent ]

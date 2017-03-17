@@ -17,19 +17,24 @@ th {
     <div class="col" style="width:100%">
         <table class="table table-condensed table-hover" style="cursor:default;user-select:none">
             <thead class="thead-default">
-                <th>
+                <th style="vertical-align:middle">
                     Name
                 </th>
-                <th>
+                <th style="vertical-align:middle">
                     Version
                 </th>
-                <th>
+                <th style="vertical-align:middle">
                     Type(s)
                 </th>
-                <th>
+                <th style="vertical-align:middle">
                     Loader
                 </th>
-                <th></th>
+                <th>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#moduleLoad">
+                        <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+                        Load
+                    </button>
+                </th>
             </thead>
             <tbody>
                 <tr *ngFor="let module of modules" [ngClass]="{'warning':module.__bossDisable}">
@@ -111,6 +116,14 @@ th {
     <div class="modal-dialog" style="max-width:95%;height:90%;">
         <div class="modal-content">
             <module-config [module]="selectedModule"></module-config>
+        </div>
+    </div>
+</div>
+
+<div id="moduleLoad" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <module-load></module-load>
         </div>
     </div>
 </div>

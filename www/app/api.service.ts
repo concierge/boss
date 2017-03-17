@@ -12,19 +12,21 @@
          this.zone = new NgZone({enableLongStackTrace: false});
      }
 
+     wrapCall(callback: Function, data: any): void {
+         this.zone.run(() => {
+             callback.apply(this, data);
+         });
+     }
+
      on(event: string, callback: Function): void {
          this.socket.on(event, (...data: any[]) => {
-            this.zone.run(() => {
-                callback.apply(this, data);
-            });
+             this.wrapCall(callback, data);
          });
      }
 
      once(event: string, callback: Function): void {
          this.socket.once(event, (...data: any[]) => {
-            this.zone.run(() => {
-                callback.apply(this, data);
-            });
+             this.wrapCall(callback, data);
          });
      }
 
