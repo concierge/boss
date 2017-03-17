@@ -34,6 +34,10 @@ th {
                         <span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
                         Load
                     </button>
+                    <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#moduleInstall">
+                        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                        Install
+                    </button>
                 </th>
             </thead>
             <tbody>
@@ -42,7 +46,7 @@ th {
                         {{module.name}}
                     </td>
                     <td>
-                        {{module.version.toPrecision().indexOf('.') >= 0 ? module.version.toPrecision() : module.version.toPrecision() + '.0'}}
+                        {{getModuleVersionString(module)}}
                     </td>
                     <td>
                         <span *ngFor="let type of module.type" class="label" [ngClass]="colours[type] || colours['']">{{module.type}}</span>
@@ -124,6 +128,14 @@ th {
     <div class="modal-dialog">
         <div class="modal-content">
             <module-load></module-load>
+        </div>
+    </div>
+</div>
+
+<div id="moduleInstall" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <module-install></module-install>
         </div>
     </div>
 </div>

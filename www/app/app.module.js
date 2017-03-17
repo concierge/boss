@@ -19,6 +19,7 @@ var error_dashboard_component_js_1 = require("./error-dashboard.component.js");
 var module_config_component_js_1 = require("./module-config.component.js");
 var user_component_js_1 = require("./user.component.js");
 var module_load_component_js_1 = require("./module-load.component.js");
+var module_install_component_js_1 = require("./module-install.component.js");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -39,7 +40,8 @@ AppModule = __decorate([
             error_dashboard_component_js_1.ErrorDashboardComponent,
             module_config_component_js_1.ModuleConfigComponent,
             user_component_js_1.UserConfigComponent,
-            module_load_component_js_1.ModuleLoadComponent
+            module_load_component_js_1.ModuleLoadComponent,
+            module_install_component_js_1.ModuleInstallComponent
         ],
         providers: [api_service_js_1.ApiService],
         bootstrap: [app_component_js_1.AppComponent]

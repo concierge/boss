@@ -12,6 +12,7 @@ import { ErrorDashboardComponent }     from './error-dashboard.component.js';
 import { ModuleConfigComponent }       from './module-config.component.js';
 import { UserConfigComponent }         from './user.component.js';
 import { ModuleLoadComponent }         from './module-load.component.js';
+import { ModuleInstallComponent }      from './module-install.component.js';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { ModuleLoadComponent }         from './module-load.component.js';
         ErrorDashboardComponent,
         ModuleConfigComponent,
         UserConfigComponent,
-        ModuleLoadComponent
+        ModuleLoadComponent,
+        ModuleInstallComponent
     ],
     providers: [ ApiService ],
     bootstrap: [ AppComponent ]

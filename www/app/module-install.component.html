@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title">Install Module</h4>
+</div>
+<div class="modal-body" style="text-align:left">
+    <div class="form-group">
+        <div [ngClass]="{'hidden':noInstallToSelect()||selectedModuleUrl!=''}">
+            <label class="label" style="color:black">KPM Table</label>
+            <select class="form-control" [(ngModel)]="selectedModule">
+                <option value="" selected>Select a module to install</option>
+                <option *ngFor="let m of kpmModules" [ngValue]="m">{{m}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group" [ngClass]="{'hidden':selectedModule!=''}">
+        <label class="label" style="color:black">GIT/Script URL</label>
+        <input class="form-control" type="text" [(ngModel)]="selectedModuleUrl" />
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" data-dismiss="modal" [ngClass]="{'disabled':noInstallSelected()}" (click)="install()">
+        <span class="glyphicon glyphicon-upload"></span>
+        <span>Install</span>
+    </button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        <span>Cancel</span>
+    </button>
+</div>

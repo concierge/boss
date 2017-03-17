@@ -27,6 +27,12 @@ export class ModulesDashboardComponent extends ApiServiceUser {
         this.getAll('allModules', this.addAllModules.bind(this));
         titleService.setTitle('Modules');
 
+        window.clearMessageLog = () => {
+            api.wrapCall(() => {
+                this.messageLog = [];
+            });
+        };
+
         this.on('loader_preload', (data: Object) => {
             if (!Array.isArray(data.type))
                 data.type = [data.type];
@@ -64,8 +70,9 @@ export class ModulesDashboardComponent extends ApiServiceUser {
 
     addAllModules(data: Object[]) : void {
         this.modules = data;
-        for (let module of this.modules) {
-            module.__bossDisable = false;
+        for (let i = 0; i < data.length; i++) {
+            data[i].__bossDisable = false;
+            data[i].version = data[i].version || 1.0;
         }
         this.sortModules();
     }
@@ -104,6 +111,14 @@ export class ModulesDashboardComponent extends ApiServiceUser {
 
     selectModule(module: Object): void {
         this.selectedModule = module;
+    }
+
+    getModuleVersionString(module: Object): string {
+        if (typeof(module.version) === 'string')
+            return module.version;
+        return module.version.toPrecision().indexOf('.') >= 0
+            ? module.version.toPrecision() + ''
+            : module.version.toPrecision() + '.0';
     }
 
     ngOnDestroy() {

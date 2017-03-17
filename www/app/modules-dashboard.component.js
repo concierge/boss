@@ -43,6 +43,11 @@ var ModulesDashboardComponent = (function (_super) {
         _this.getAll('allLoaders', _this.resolveAllLoaders.bind(_this));
         _this.getAll('allModules', _this.addAllModules.bind(_this));
         titleService.setTitle('Modules');
+        window.clearMessageLog = function () {
+            api.wrapCall(function () {
+                _this.messageLog = [];
+            });
+        };
         _this.on('loader_preload', function (data) {
             if (!Array.isArray(data.type))
                 data.type = [data.type];
@@ -76,9 +81,9 @@ var ModulesDashboardComponent = (function (_super) {
     };
     ModulesDashboardComponent.prototype.addAllModules = function (data) {
         this.modules = data;
-        for (var _i = 0, _a = this.modules; _i < _a.length; _i++) {
-            var module = _a[_i];
-            module.__bossDisable = false;
+        for (var i = 0; i < data.length; i++) {
+            data[i].__bossDisable = false;
+            data[i].version = data[i].version || 1.0;
         }
         this.sortModules();
     };
@@ -110,6 +115,13 @@ var ModulesDashboardComponent = (function (_super) {
     };
     ModulesDashboardComponent.prototype.selectModule = function (module) {
         this.selectedModule = module;
+    };
+    ModulesDashboardComponent.prototype.getModuleVersionString = function (module) {
+        if (typeof (module.version) === 'string')
+            return module.version;
+        return module.version.toPrecision().indexOf('.') >= 0
+            ? module.version.toPrecision() + ''
+            : module.version.toPrecision() + '.0';
     };
     ModulesDashboardComponent.prototype.ngOnDestroy = function () {
         this.selectedModule = null;
