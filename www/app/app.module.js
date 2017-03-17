@@ -10,11 +10,14 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
-var app_routing_module_1 = require("./app-routing.module");
-var api_service_1 = require("./api.service");
-var app_component_1 = require("./app.component");
-var modules_dashboard_component_1 = require("./modules-dashboard.component");
-var error_dashboard_component_1 = require("./error-dashboard.component");
+var ng2_jsoneditor_1 = require("ng2-jsoneditor");
+var app_routing_module_js_1 = require("./app-routing.module.js");
+var api_service_js_1 = require("./api.service.js");
+var app_component_js_1 = require("./app.component.js");
+var modules_dashboard_component_js_1 = require("./modules-dashboard.component.js");
+var error_dashboard_component_js_1 = require("./error-dashboard.component.js");
+var module_config_component_js_1 = require("./module-config.component.js");
+var user_component_js_1 = require("./user.component.js");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,15 +29,18 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             http_1.HttpModule,
-            app_routing_module_1.AppRoutingModule
+            app_routing_module_js_1.AppRoutingModule,
+            ng2_jsoneditor_1.JSONEditorModule
         ],
         declarations: [
-            app_component_1.AppComponent,
-            modules_dashboard_component_1.ModulesDashboardComponent,
-            error_dashboard_component_1.ErrorDashboardComponent
+            app_component_js_1.AppComponent,
+            modules_dashboard_component_js_1.ModulesDashboardComponent,
+            error_dashboard_component_js_1.ErrorDashboardComponent,
+            module_config_component_js_1.ModuleConfigComponent,
+            user_component_js_1.UserConfigComponent
         ],
-        providers: [api_service_1.ApiService],
-        bootstrap: [app_component_1.AppComponent]
+        providers: [api_service_js_1.ApiService],
+        bootstrap: [app_component_js_1.AppComponent]
     })
 ], AppModule);
 exports.AppModule = AppModule;

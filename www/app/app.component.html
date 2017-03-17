@@ -15,7 +15,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a data-toggle="modal" data-target="#powerDialog">
+                    <a data-toggle="modal" data-target="#userManagementDialog" style="cursor:pointer">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="modal" data-target="#powerDialog" style="cursor:pointer">
                         <span class="glyphicon glyphicon-off"></span>
                     </a>
                 </li>
@@ -88,7 +93,7 @@
                     <span>Shutdown</span>
                 </button>
 
-                <button type="button" class="btn btn-primary powerButton" data-dismiss="modal" (click)="restart()">
+                <button type="button" class="btn btn-info powerButton" data-dismiss="modal" (click)="restart()">
                     <span class="glyphicon glyphicon-repeat powerButtonIcon"></span>
                     <br />
                     <span>Restart</span>
@@ -100,6 +105,14 @@
                     <span>Cancel</span>
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="userManagementDialog" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <user-management></user-management>
         </div>
     </div>
 </div>

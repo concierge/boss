@@ -3,21 +3,40 @@
 const sha512 = require('sha512');
 
 ﻿module.exports = class {
-    constructor (users) {
-        this.users = users;
+    constructor (cfg) {
+        this.users = cfg.auth;
     }
 
-    validateUser (username, password) {
+    validateUser(username, password) {
         password = sha512(password).toString('hex');
-        let f = this.users.filter((user) => {
+        const f = this.users.filter(user => {
             return user.username === username && user.password === password;
         });
         return f.length === 1;
     }
 
     getUserList() {
-        return this.users.map((user) => {
-            return user.username;
-        });
+        return this.users.map(user => user.username);
+    }
+
+    deleteUser(username) {
+        const index = this.users.findIndex(u => u.username === username);
+        if (index < 0)
+            return;
+        this.users.splice(index, 1);
+    }
+
+    updateUser(username, password) {
+        password = sha512(password).toString('hex');
+        const index = this.users.findIndex(u => u.username === username);
+        if (index < 0) {
+            this.users.push({
+                username: username,
+                password: password
+            });
+        }
+        else {
+            this.users[index].password = password;
+        }
     }
 };

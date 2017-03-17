@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{selectedModule.name}}</h4>
+</div>
+<div class="modal-body" style="text-align:left;">
+    <json-editor [options]="editorOptions" [data]="data"></json-editor >
+</div>
+<div class="modal-footer" style="text-align: center">
+    <button type="button" class="btn btn-success" data-dismiss="modal" style="display:inline-block;" (click)="save()">
+        <span class="glyphicon glyphicon-save"></span>
+        <span>Save</span>
+    </button>
+    <button type="button" class="btn btn-info" data-dismiss="modal" style="display:inline-block;" (click)="update()">
+        <span class="glyphicon glyphicon-circle-arrow-up"></span>
+        <span>Update</span>
+    </button>
+    <button type="button" class="btn btn-warning" data-dismiss="modal" style="display:inline-block;" (click)="reload()">
+        <span class="glyphicon glyphicon-repeat"></span>
+        <span>Reload</span>
+    </button>
+    <button type="button" class="btn btn-warning" data-dismiss="modal" style="display:inline-block;" (click)="unload()">
+        <span class="glyphicon glyphicon-eject"></span>
+        <span>Unload</span>
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" style="display:inline-block;" (click)="uninstall()">
+        <span class="glyphicon glyphicon-trash"></span>
+        <span>Uninstall</span>
+    </button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" style="display:inline-block;">
+        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        <span>Cancel</span>
+    </button>
+</div>

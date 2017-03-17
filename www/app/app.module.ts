@@ -1,25 +1,31 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
-import { HttpModule }    from '@angular/http';
+import { NgModule }         from '@angular/core';
+import { BrowserModule }    from '@angular/platform-browser';
+import { FormsModule }      from '@angular/forms';
+import { HttpModule }       from '@angular/http';
+import { JSONEditorModule } from 'ng2-jsoneditor';
 
-import { AppRoutingModule }            from './app-routing.module';
-import { ApiService }                  from './api.service'
-import { AppComponent }                from './app.component';
-import { ModulesDashboardComponent }   from './modules-dashboard.component';
-import { ErrorDashboardComponent }     from './error-dashboard.component';
+import { AppRoutingModule }            from './app-routing.module.js';
+import { ApiService }                  from './api.service.js';
+import { AppComponent }                from './app.component.js';
+import { ModulesDashboardComponent }   from './modules-dashboard.component.js';
+import { ErrorDashboardComponent }     from './error-dashboard.component.js';
+import { ModuleConfigComponent }       from './module-config.component.js';
+import { UserConfigComponent }         from './user.component.js';
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        JSONEditorModule
     ],
     declarations: [
         AppComponent,
         ModulesDashboardComponent,
-        ErrorDashboardComponent
+        ErrorDashboardComponent,
+        ModuleConfigComponent,
+        UserConfigComponent
     ],
     providers: [ ApiService ],
     bootstrap: [ AppComponent ]

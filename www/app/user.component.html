@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h4 class="modal-title">User Management</h4>
+</div>
+<div class="modal-body" style="text-align:left">
+    <div class="form-group">
+        <label class="control-label" for="userManagementUsername">{{userFieldText()}}</label>
+        <input class="form-control" type="text" id="userManagementUsername" [(ngModel)]="username" />
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-warning':password2 != '' && passwordsDontMatch()}">
+        <label class="control-label" for="userManagementPassword">Password</label>
+        <input class="form-control" type="password" id="userManagementPassword" [(ngModel)]="password" />
+    </div>
+
+    <div class="form-group" [ngClass]="{'has-warning':passwordsDontMatch()}">
+        <label class="control-label" for="userManagementPassword2">Confirm</label>
+        <input class="form-control" type="password" id="userManagementPassword2" [(ngModel)]="password2" />
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-success" data-dismiss="modal" [ngClass]="{'disabled':usernameIsEmpty()||passwordsDontMatch()}" (click)="save()">
+        <span class="glyphicon glyphicon-save"></span>
+        <span>{{saveButtonText()}}</span>
+    </button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal" [ngClass]="{'disabled':userDoesntExist()}" (click)="delete()">
+        <span class="glyphicon glyphicon-trash"></span>
+        <span>Delete User</span>
+    </button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        <span>Cancel</span>
+    </button>
+</div>

@@ -25,13 +25,13 @@ const onUnhandledError = (err, blame, api, event) => {
 };
 
 exports.load = () => {
-	let port = exports.config.port || 8080,
-		users = exports.config.auth || [ // admin:admin
-			{
-				"username": "admin",
-				"password": "c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec"
-			}
-		];
+    exports.config.port = exports.config.port || 8080;
+    exports.config.auth = exports.config.auth || [ // admin:admin
+        {
+            "username": "admin",
+            "password": "c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec"
+        }
+    ];
 
     let npmPath;
     try {
@@ -44,9 +44,10 @@ exports.load = () => {
         npmPath = global.rootPathJoin('node_modules');
     }
 
-	let userManager = new UserManager(users);
-	_serve = new Server(port, userManager, {
+	const userManager = new UserManager(exports.config);
+	_serve = new Server(exports.config.port, userManager, {
         '/node_modules/': npmPath,
+        '/@angular/': path.join(npmPath, '@angular'),
         '_default_': path.join(exports.__descriptor.folderPath, 'www')
     }, '/bossEvents');
 
@@ -101,6 +102,56 @@ exports.load = () => {
     exports.platform.on('uncaughtError', onUnhandledError);
     _serve.on('allUnhandledErrors', socket => {
         socket.emit('allUnhandledErrors', unhandledErrors);
+    });
+
+    _serve.on('user_list', socket => {
+        socket.emit('user_list', userManager.getUserList());
+    });
+
+    _serve.on('user_delete', (socket, data) => {
+        userManager.deleteUser(data[0]);
+    });
+
+    _serve.on('user_update', (socket, data) => {
+        userManager.updateUser(data[0].username, data[0].password);
+    });
+
+    _serve.on('module_config', (socket, data) => {
+        const config = exports.platform.config.loadConfig({
+            name: data[0],
+            type: [],
+            force: true
+        });
+        socket.emit('module_config', config);
+    });
+
+    _serve.on('module_newconfig', (socket, data) => {
+        const cfg = exports.platform.config.loadConfig({
+            name: data[0],
+            type: [],
+            force: true
+        });
+
+        const inputData = data[1];
+        if (typeof(inputData) !== 'object' || Array.isArray(inputData)) {
+            return;
+        }
+        for (let key in queryResult.parent[queryResult.property]) {
+            if (queryResult.parent[queryResult.property].hasOwnProperty(key)) {
+                delete queryResult.parent[queryResult.property][key];
+            }
+        }
+        for (let key in inputData) {
+            if (inputData.hasOwnProperty(key)) {
+                queryResult.parent[queryResult.property][key] = inputData[key];
+            }
+        }
+
+        for (let key of Object.keys(cfg)) {
+            if (key.startsWith('ENV_') && key === key.toUpperCase()) {
+                process.env[key.substr(4)] = cfg[key];
+            }
+        }
     });
 
     _serve.start();

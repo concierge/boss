@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ApiService } from './api.service';
+import { Component }      from '@angular/core';
+import { ApiService }     from './api.service.js';
+import { ApiServiceUser } from './api-user.js';
 
 @Component({
     moduleId: module.id,
@@ -7,25 +8,26 @@ import { ApiService } from './api.service';
     templateUrl: './app.component.html'
 })
 
-export class AppComponent {
+export class AppComponent extends ApiServiceUser {
     title = 'Boss';
     private isConnected: boolean = true;
 
-    constructor(private apiService: ApiService) {
-        apiService.on('connect', () => {
+    constructor(private api: ApiService) {
+        super(api);
+        this.on('connect', () => {
             this.isConnected = true;
         });
 
-        apiService.on('disconnect', () => {
+        this.on('disconnect', () => {
             this.isConnected = false;
         });
     }
 
     shutdown(): void {
-        this.apiService.emit('directMessage', '/shutdown');
+        this.emit('directMessage', '/shutdown');
     }
 
     restart(): void {
-        this.apiService.emit('directMessage', '/restart');
+        this.emit('directMessage', '/restart');
     }
 }

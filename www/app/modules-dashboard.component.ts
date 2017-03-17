@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ApiService } from './api.service';
+import { ApiService }     from './api.service.js';
+import { ApiServiceUser } from './api-user.js';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -7,7 +8,7 @@ import { Title } from '@angular/platform-browser';
     selector: 'modules-dashboard',
     templateUrl: './modules-dashboard.component.html'
 })
-export class ModulesDashboardComponent {
+export class ModulesDashboardComponent extends ApiServiceUser {
     private modules: Object[] = [];
     private loaders: Object[] = [];
     private colours: Object = {
@@ -18,16 +19,15 @@ export class ModulesDashboardComponent {
         '': 'label-warning'
     };
     private messageLog: string[] = [];
+    private selectedModule: Object = null;
 
-    constructor(private apiService: ApiService, private titleService: Title) {
-        this.apiService = apiService;
-        apiService.on('allLoaders', this.resolveAllLoaders.bind(this));
-        apiService.emit('allLoaders');
-        apiService.on('allModules', this.addAllModules.bind(this));
-        apiService.emit('allModules');
+    constructor(private api: ApiService, private titleService: Title) {
+        super(api);
+        this.getAll('allLoaders', this.resolveAllLoaders.bind(this));
+        this.getAll('allModules', this.addAllModules.bind(this));
         titleService.setTitle('Modules');
 
-        apiService.on('loader_preload', (data: Object) => {
+        this.on('loader_preload', (data: Object) => {
             if (!Array.isArray(data.type))
                 data.type = [data.type];
             data.__bossDisable = true;
@@ -35,22 +35,22 @@ export class ModulesDashboardComponent {
             this.sortModules();
         });
 
-        apiService.on('loader_load', (data: any) => {
+        this.on('loader_load', (data: any) => {
             const index = this.modules.findIndex(f => f.folderPath === data.folderPath);
             this.modules[index].__bossDisable = false;
         });
 
-        apiService.on('loader_preunload', (data: any) => {
+        this.on('loader_preunload', (data: any) => {
             const index = this.modules.findIndex(f => f.folderPath === data.folderPath);
             this.modules[index].__bossDisable = true;
         });
 
-        apiService.on('loader_unload', (data: Object) => {
+        this.on('loader_unload', (data: Object) => {
             const index = this.modules.findIndex(f => f.folderPath === data.folderPath);
             this.modules.splice(index, 1);
         });
 
-        apiService.on('directMessage', (data: string) => {
+        this.on('directMessage', (data: string) => {
             this.messageLog.push(data);
         });
     }
@@ -75,19 +75,19 @@ export class ModulesDashboardComponent {
     }
 
     updateModule(module: Object) {
-        this.apiService.emit('directMessage', `/kpm update ${module.name}`);
+        this.emit('directMessage', `/kpm update ${module.name}`);
     }
 
     unloadModule(module: Object) {
-        this.apiService.emit('directMessage', `/kpm unload ${module.name}`);
+        this.emit('directMessage', `/kpm unload ${module.name}`);
     }
 
     reloadModule(module: Object) {
-        this.apiService.emit('directMessage', `/kpm reload ${module.name}`);
+        this.emit('directMessage', `/kpm reload ${module.name}`);
     }
 
     uninstallModule(module: Object) {
-        this.apiService.emit('directMessage', `/kpm uninstall ${module.name}`);
+        this.emit('directMessage', `/kpm uninstall ${module.name}`);
     }
 
     getMessageLog(): string {
@@ -102,13 +102,12 @@ export class ModulesDashboardComponent {
         this.messageLog = [];
     }
 
+    selectModule(module: Object): void {
+        this.selectedModule = module;
+    }
+
     ngOnDestroy() {
-        this.apiService.removeListeners('allLoaders');
-        this.apiService.removeListeners('allModules');
-        this.apiService.removeListeners('loader_preload');
-        this.apiService.removeListeners('loader_load');
-        this.apiService.removeListeners('loader_preunload');
-        this.apiService.removeListeners('loader_unload');
-        this.apiService.removeListeners('directMessage');
+        this.selectedModule = null;
+        super.ngOnDestroy();
     }
 }

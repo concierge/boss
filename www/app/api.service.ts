@@ -1,6 +1,6 @@
- import * as io from 'socket.io-client';
+ import * as io        from 'socket.io-client';
  import { Injectable } from '@angular/core';
- import { NgZone } from '@angular/core';
+ import { NgZone }     from '@angular/core';
 
  @Injectable()
  export class ApiService {
@@ -20,8 +20,20 @@
          });
      }
 
+     once(event: string, callback: Function): void {
+         this.socket.once(event, (...data: any[]) => {
+            this.zone.run(() => {
+                callback.apply(this, data);
+            });
+         });
+     }
+
      emit(event: string, ...data: any[]): void {
          this.socket.emit(event, data);
+     }
+
+     removeListener(event: string, callback: Function): void {
+         this.socket.removeListener(event, callback);
      }
 
      removeListeners(event: string): void {

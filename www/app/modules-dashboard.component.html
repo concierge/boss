@@ -47,7 +47,8 @@ th {
                     </td>
                     <td>
                         <div class="btn-group" style="margin:0">
-                            <button type="button" class="btn btn-info btn-sm" [disabled]="module.__bossDisable">
+                            <button type="button" class="btn btn-info btn-sm" [disabled]="module.__bossDisable"
+                                data-toggle="modal" data-target="#moduleConfig" (click)="selectedModule = module">
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 Settings
                             </button>
@@ -102,6 +103,14 @@ th {
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clearMessageLog()">Close and Clear</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="moduleConfig" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-width:95%;height:90%;">
+        <div class="modal-content">
+            <module-config [module]="selectedModule"></module-config>
         </div>
     </div>
 </div>
