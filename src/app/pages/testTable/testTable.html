@@ -1,0 +1,50 @@
+<!--<style>
+  .full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+</style>
+ 
+<div>
+  <pre class="card card-block card-header">Selected date is: <em *ngIf="dt">{{ getDate() | date:'fullDate'}}</em></pre>
+  <h4>Inline</h4>
+  <div style="display:inline-block; min-height:290px;">
+    <datepicker [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="true"></datepicker>
+  </div>
+ 
+  <hr />
+  <button type="button" class="btn btn-sm btn-info" (click)="today()">Today</button>
+  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="d20090824();">2009-08-24</button>
+  <button type="button" class="btn btn-sm btn-danger" (click)="clear()">Clear</button>
+  <button type="button" class="btn btn-sm btn-default btn-secondary" (click)="toggleMin()" tooltip="After today restriction">Min date</button>
+</div>-->
+<!--
+<label>Date:</label> 
+<div class="datepickerDiv">
+   <input type="text" value="{{ getDate() | date:'dd-MMMM-yyyy' }}" class="datepicker"> 
+        <span class="cal-icon" (click)="open()"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+        <span class="clearDate" (click)="clearDate()"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+        <ul class="datepicker-ul" role="menu" *ngIf="opened">
+             <datepicker [(ngModel)]="dt" [minDate]="minDate" [showWeeks]="false" (selectionDone)="onSelectionDone($event)"></datepicker>
+        </ul>
+</div>-->
+
+<!--<input value="{{date | date:'MM/dd/yy'}}" type="text" [ngModel]="date" (focus)="showDatePicker = true">
+  <div *ngIf="showDatePicker" style="position: absolute; z-index:10; min-height:290px;">
+    <datepicker [(ngModel)]="date" [minDate]="minDate" [showWeeks]="true" (selectionDone)="showDatePicker = false"></datepicker>
+  </div>-->
+
+ <div class="container">
+   <div class="row">
+     <button routerLink="edit/{{tempId}}" md-raised-button [disableRipple]="true">click me</button>
+     <button style="background-color:red;" md-mini-fab >
+      <md-icon fontSet="fa" fontIcon="fa-plus"></md-icon>
+    </button>
+   </div>
+ </div>

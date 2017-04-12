@@ -3,6 +3,7 @@
 const Server = require('./server/server/serve.js'),
 	UserManager = require('./server/users/users.js'),
     BossMockIntegration = require('./BossMockIntegration.js'),
+    admin = require('ng2-admin'),
     files = require('concierge/files'),
 	path = require('path'),
     fs = require('fs');
