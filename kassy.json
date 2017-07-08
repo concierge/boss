@@ -1,6 +1,6 @@
 {
 	"name": "boss",
-	"version": 1.0,
+	"version": "1.0.2",
 	"startup": "boss.js",
 	"help": [],
 	"priority": "first",
