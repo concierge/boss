@@ -156,10 +156,10 @@ exports.load = () => {
         }
     });
 
-    _serve.on('unloaded_modules', socket => {
+    _serve.on('unloaded_modules', async(socket) => {
         const folders = exports.platform.modulesLoader.getLoadedModules()
             .map(m => path.basename(m.__descriptor.folderPath));
-        const data = files.filesInDirectory(global.__modulesPath);
+        const data = await files.filesInDirectory(global.__modulesPath);
         const unloadedModules = [];
         for (let folder of data) {
             if (!folders.includes(folder))
